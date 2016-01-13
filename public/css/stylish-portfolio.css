@@ -32,8 +32,9 @@ body {
 /* Custom Button Styles */
 
 .btn-dark {
-    border-radius: 0;
+    border-radius: 10px;
     color: #fff;
+    border: 1px solid antiquewhite;
     background-color: rgba(0,0,0,0.4);
 }
 .loginReg {
@@ -160,11 +161,12 @@ hr.small {
     position: relative;
     width: 100%;
     height: 100%;
-    background: url(../img/bg.jpg) no-repeat center center scroll;
+    background: rgba(0, 0, 0, 0.36);
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+
 }
 
 /* About */

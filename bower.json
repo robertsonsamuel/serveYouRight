@@ -20,6 +20,7 @@
     "bootswatch-dist": "superhero",
     "angular": "~1.4.8",
     "angular-ui-router": "~0.2.15",
-    "vide": "~0.4.1"
+    "vide": "~0.4.1",
+    "bootstrap-sweetalert": "~0.4.5"
   }
 }

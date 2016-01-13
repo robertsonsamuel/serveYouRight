@@ -11,6 +11,10 @@ var members = require('./routes/members');
 
 var app = express();
 
+// mongodb setup
+var MONGO_URL = process.env.MONGOLAB_URI || 'mongodb://localhost/serveU';
+mongoose.connect(MONGO_URL);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -56,6 +60,7 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+
 
 
 module.exports = app;
