@@ -1,0 +1,25 @@
+{
+  "name": "server-friend",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Samuel Robertson <samuel.robertson93@gmail.com>"
+  ],
+  "license": "MIT",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootswatch-dist": "superhero",
+    "angular": "~1.4.8",
+    "angular-ui-router": "~0.2.15",
+    "vide": "~0.4.1"
+  }
+}
