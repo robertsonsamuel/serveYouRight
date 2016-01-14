@@ -1,3 +1,5 @@
+/* global swal */
+/* global angular */
 'use strict';
 let app = angular.module('MainApp', ['ui.router']);
 
@@ -8,21 +10,44 @@ app.config(function($stateProvider, $urlRouterProvider) {
     .state('login', {
       url: "/login",
       templateUrl: "../partials/loginMember.html",
-      controller: "loginCtrl"
+      controller: "loginCtrl",
+      authenticate: false 
     })
     .state('resident', {
       url: "/register",
       templateUrl: "../partials/registerMember.html",
-      controller: "registerCtrl"
+      controller: "registerCtrl",
+      authenticate: false
+    })
+      .state('welcome', {
+      url: "/welcome",
+      templateUrl: "../partials/welcomePage.html",
+      controller: "welcomeCtrl",
+      authenticate: true 
     })
 
 })
 
-app.controller('loginCtrl',function ($scope, loginSrv, tokenSvc) {
+app.run(function ($rootScope, $state, AuthService) {
+  $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
+    if (toState.authenticate && !AuthService.isAuthenticated()){
+      // User isn’t authenticated
+      $state.transitionTo("login");
+      event.preventDefault(); 
+    }
+  });
+});
+
+
+// controllers 
+
+// Login Ctrl
+app.controller('loginCtrl',function ($scope, loginSrv, tokenSvc, $state) {
   $scope.login = function (loginData) {
     loginSrv.loginUser(loginData).then(function (resp) {
       console.log(resp.data);
       tokenSvc.setToken(resp.data.token);
+      $state.go('welcome')
     },function (err) {
       if(err) swal("Error", `${err.data.message}`, "warning")
       tokenSvc.removeToken();
@@ -31,6 +56,8 @@ app.controller('loginCtrl',function ($scope, loginSrv, tokenSvc) {
   }
 })
 
+
+// Register Ctrl
 app.controller('registerCtrl',function ($scope, registerSrv, $state ) {
   $scope.register = function (regData) {
     registerSrv.registerUser(regData).then(function (resp) {
@@ -45,6 +72,13 @@ app.controller('registerCtrl',function ($scope, registerSrv, $state ) {
 })
 
 
+// WelcomePage Ctrl
+app.controller('welcomeCtrl',function ($scope, registerSrv, $state ) {
+    console.log('welcome hello!');
+});
+
+
+// Services 
 
 app.service('loginSrv', function ($http) {
   this.loginUser = function (loginData) {
@@ -67,3 +101,17 @@ app.service('tokenSvc',function () {
      localStorage.removeItem('token');
   }
 });
+
+app.service('AuthService',function ($http) {
+  this.isAuthenticated = function (params) {
+      if(typeof localStorage.token === 'undefined'){
+        return false;    
+      }else if(localStorage.token == null){
+          return false;
+      }else{
+          return true;
+      }
+  }
+});
+
+

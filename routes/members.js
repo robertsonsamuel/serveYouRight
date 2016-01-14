@@ -16,9 +16,6 @@ function createJWT(user) {
 
 
 /* GET users listing. */
-router.get('/', function(req, resp, next) {
-  res.send('respond with a resource');
-});
 
 router.post('/login',function (req,res,next) {
   console.log(req.body);
