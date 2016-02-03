@@ -2,51 +2,45 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <title>Employee Sign Up</title>
-  <script src="vendor/angular/angular.min.js"></script>
-  <script src="vendor/angular-ui-router/release/angular-ui-router.min.js"></script>
-  <script src="vendor/bootstrap-sweetalert/lib/sweet-alert.min.js"></script>
-  <script src="js/angularApp.js"></script>
-  
-  <link rel="stylesheet" href="vendor/bootswatch-dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="vendor/bootstrap-sweetalert/lib/sweet-alert.css">
-  <link rel="stylesheet" href="css/stylish-portfolio.css">
-  <link rel="stylesheet" href="css/footer-basic-centered.css">
-  <link rel="stylesheet" href="css/footer.css">
+    <meta charset="UTF-8">
+    <title>Employee Sign Up</title>
+    <script src="vendor/angular/angular.min.js"></script>
+    <script src="vendor/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="vendor/bootstrap-sweetalert/lib/sweet-alert.min.js"></script>
+    <script src="js/angularApp.js"></script>
+
+    <link rel="stylesheet" href="vendor/bootswatch-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="vendor/bootstrap-sweetalert/lib/sweet-alert.css">
+    <link rel="stylesheet" href="css/stylish-portfolio.css">
+    <link rel="stylesheet" href="css/footer-basic-centered.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/footer.css">
 
 </head>
 
 <body ng-app="MainApp">
-  <div class="jumbotron">
-    <h1>Welcome</h1>
-    <h3><a href="/">Back</a></h3>
-    <div class="container">
-      <div class="col-sm-6 col-md-8 col-lg-8 col-sm-offset-2 loginReg">
-        <div ui-view ></div>
-      </div>
+    <div class="jumbotron">
+        <h1 ng-hide="user">Welcome</h1>
+        <h3><a href="/">Back</a></h3>
+        <div class="container-fluid">
+            <div class="col-sm-6 col-md-8 col-lg-12  loginReg">
+                <div ui-view></div>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <footer class="footer-basic-centered">
-
-  <p class="footer-company-motto">The company motto.</p>
-  <p class="footer-links">
-    <a href="#">Home</a>
-    ·
-    <a href="#">Blog</a>
-    ·
-    <a href="#">Pricing</a>
-    ·
-    <a href="#">About</a>
-    ·
-    <a href="#">Faq</a>
-    ·
-    <a href="#">Contact</a>
-  </p>
-  <p class="footer-company-name">Company Name &copy; 2015</p>
-
-</footer>
+    <footer class="footer-basic-centered">
+        <p class="footer-company-motto">The company motto.</p>
+        <p class="footer-links">
+            <a href="#">Home</a> ·
+            <a href="#">Blog</a> ·
+            <a href="#">Pricing</a> ·
+            <a href="#">About</a> ·
+            <a href="#">Faq</a> ·
+            <a href="#">Contact</a>
+        </p>
+        <p class="footer-company-name">Company Name &copy; 2015</p>
+    </footer>
 
 </body>
 

@@ -19,7 +19,7 @@ function createJWT(user) {
 
 router.post('/login',function (req,res,next) {
   console.log(req.body);
-  Owner.findOne({ email: req.body.email }, 'password', function(err, user) {
+  Owner.findOne({ email: req.body.email }, function(err, user) {
     if(user === null){
 
       Employee.findOne({ email: req.body.email }, function(err, user) {
@@ -83,5 +83,7 @@ router.post('/register',function (req,res,next) {
          res.status(200).send({message:'Success', user})
        })
  }
-})
+});
+
+
 module.exports = router;
