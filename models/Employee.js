@@ -12,7 +12,7 @@ let empSchema = new Schema({
   storeCode: { type: String, unique: false },
   owner:{ type: Boolean, default:false },
   menus: [{ type: Schema.Types.ObjectId, ref: 'Menu' }],
-  orders:[{ type: Schema.Types.ObjectId, ref: 'Item'}]
+  orders:[{ type: Schema.Types.ObjectId, ref: 'Order'}]
 })
 
 empSchema.pre('save', function(next) {

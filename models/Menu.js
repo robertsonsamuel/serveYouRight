@@ -10,7 +10,7 @@ let menuSchema = new Schema({
 })
 
 
-let Employee = mongoose.model('Menu', menuSchema);
+let Menu = mongoose.model('Menu', menuSchema);
 
 
-module.exports = Employee;
+module.exports = Menu;

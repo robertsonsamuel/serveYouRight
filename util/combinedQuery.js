@@ -2,6 +2,7 @@
 let Owner    = require('../models/Owner'),
     Employee = require('../models/Employee'),
     Menu     = require('../models/Menu'),
+    Item     = require('../models/Item'),
     jwt      = require('jwt-simple');
 
 function createJWT(user) {
@@ -122,6 +123,19 @@ module.exports = {
       Menu.findByIdAndRemove(req.params.menuId, function (err, removedMenu) {
         if(err) return cb(err, null);
         cb(null, owner)
+      })
+    })
+  },
+  addItemToMenu: function (req, cb) {
+    Menu.findOne({ _id: req.params.menuId },function (err, menu) {
+      if (err) cb(err, null);
+      Item.create(req.body, function (err, item) {
+        if (err) cb(err, null);
+        menu.items.push(item._id);
+        menu.save(function (err, savedMenu) {
+          if(err) cb(err, null);
+          cb(null, savedMenu);
+        })
       })
     })
   },

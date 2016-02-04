@@ -4,9 +4,26 @@ let express       = require('express'),
     router        = express.Router(),
     Employee      = require('../models/Employee'),
     Owner         = require('../models/Owner'),
+    Order         = require('../models/Order'),
     combinedQuery = require('../util/combinedQuery');
 
 /* GET users listing. */
+
+router.get('/ownerInfo/:ownerId',function (req,res,next) {
+  Owner.findOne({_id: req.params.ownerId}).select('-password')
+  .populate({path: 'employees menus', select:'-password'})
+  .exec(function (err, owner) {
+    res.status(err ? 400 : 200).send(err || owner);
+  });
+});
+
+router.get('/employeeInfo/:employeeId',function (req,res,next) {
+  Employee.findOne({_id: req.params.employeeId}).select('-password')
+  .populate({path: 'orders menus', select:'-password'})
+  .exec(function (err, owner) {
+    res.status(err ? 400 : 200).send(err || owner);
+  });
+});
 
 router.post('/login',function (req,res,next) {
   combinedQuery.ownerOrEmployee(req, function(err, user){
@@ -37,6 +54,7 @@ router.post('/register',function (req,res,next) {
     })
    }
 });
+
 
 
 module.exports = router;
