@@ -10,8 +10,9 @@ let ownerSchema = new Schema({
   email: { type: String, require: true },
   password: { type: String, require: true },
   companyName: { type: String, require: false },
+  owner:{ type: Boolean, default:true },
   storeCode: { type: String, unique: true },
-  employees: [{ type: Schema.Types.ObjectId, ref: 'Employee' }],
+  employees: [{ type: String, ref: 'Employee' }],
   menus: [{ type: Schema.Types.ObjectId, ref: 'Menu' }],
 })
 

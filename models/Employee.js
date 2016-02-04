@@ -7,9 +7,10 @@ let Schema = mongoose.Schema;
 let empSchema = new Schema({
   firstName: { type: String, require: true , unique: true },
   lastName: { type: String, require: true },
-  email: { type: String, require: true },
+  email: { type: String, require: true, unique: true },
   password: { type: String, require: true },
   storeCode: { type: String, unique: false },
+  owner:{ type: Boolean, default:false },
   menus: [{ type: Schema.Types.ObjectId, ref: 'Menu' }],
   orders:[{ type: Schema.Types.ObjectId, ref: 'Item'}]
 })
