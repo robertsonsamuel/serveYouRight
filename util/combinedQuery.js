@@ -117,23 +117,12 @@ module.exports = {
     })
   },
   deleteMenu: function (req, cb) {
-    Owner.findOne({_id: req.params.ownerId}).select('-password').lean().exec(function (err, owner) {
-
-      if (menuSet.has(req.params.menuId)){
-
-        menuSet.delete(req.params.menuId)
-          owner.menus = Array.from(menuSet)
-            Menu.findByIdAndRemove(req.params.menuId,function (err, removedMenu) {
-              if(err) return cb(err, null);
-            })
-            owner.save(function (err, savedOwner) {
-              if(err) return cb(err, null);
-              console.log('saved owner', savedOwner);
-              return cb(null, savedOwner);
-        })
-      }else {
-        cb('Menu does not exist with this owner', null);
-      }
+    Owner.findByIdAndUpdate(req.params.ownerId, {$pull:{menus:req.params.menuId }}).select('-password').lean().exec(function (err, owner) {
+      if(err) return cb(err, null);
+      Menu.findByIdAndRemove(req.params.menuId, function (err, removedMenu) {
+        if(err) return cb(err, null);
+        cb(null, owner)
+      })
     })
   },
   populateOwner: function(owner, cb){
