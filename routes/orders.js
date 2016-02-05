@@ -9,3 +9,9 @@ let express       = require('express'),
 router.get('/:orderId',function (req, res, next) {
   res.status(err ? 400:200).send(err || order)
 })
+
+router.post('/newOrder/',function (req, res, next) {
+  combinedQuery.newOrder(req, function (err, menu) {
+    res.status(err ? 400:200).send(err || order)
+  })
+})

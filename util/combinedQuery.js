@@ -31,7 +31,7 @@ module.exports = {
               }else{
                 user.password = null;
                 // here we send back an employee
-                return cb(null, { token: createJWT(user), user: user });
+                return cb(null, { token: createJWT(user),ser: user });
               }
             });
           }
@@ -137,6 +137,25 @@ module.exports = {
           cb(null, savedMenu);
         })
       })
+    })
+  },
+  deleteItemFromMenu: function (req, cb) {
+    Menu.findOne({_id: req.params.menuId}, function (err, foundMenu) {
+      if (err) return cb(err, null);
+      let index = foundMenu.items.indexOf(req.params.itemId);
+      if (index > -1){
+        console.log('before splice', foundMenu.items);
+        foundMenu.items.splice(index, 1);
+        console.log('found menu items', foundMenu.items);
+          Item.findByIdAndRemove(req.params.itemId, function (err, removedItem) {
+            if (err) return cb(err, null);
+            foundMenu.save(function (err, savedMenu) {
+            return cb(null, savedMenu);
+          })
+        })
+      }else {
+          return cb('Item not in Menu.', null);
+      }
     })
   },
   populateOwner: function(owner, cb){
