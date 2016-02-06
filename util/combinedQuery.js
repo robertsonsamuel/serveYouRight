@@ -22,26 +22,26 @@ module.exports = {
           if(err) return cb(err, null);
           if(user === null){
 
-            return cb({ message: 'Invalid email and/or password' }, null);
+            return cb('Invalid email and/or password', null);
 
           }else{
             user.comparePassword(req.body.password, function(err, isMatch) {
               if (!isMatch) {
-                 return cb({ message: 'Invalid email and/or password' }, null);
+                 return cb('Invalid email and/or password', null);
               }else{
                 user.password = null;
                 // here we send back an employee
-                return cb(null, { token: createJWT(user),ser: user });
+                return cb(null, { token: createJWT(user), user: user });
               }
             });
           }
         })
       }else if(user === null){
-        return cb({ message: 'Invalid email and/or password' }, null);
+        return cb('Invalid email and/or password', null);
       }else{
         user.comparePassword(req.body.password, function(err, isMatch) {
           if (!isMatch) {
-             return cb({ message: 'Invalid email and/or password' }, null);
+             return cb('Invalid email and/or password', null);
           }else{
             // here we send back the owner
             user.password = null;

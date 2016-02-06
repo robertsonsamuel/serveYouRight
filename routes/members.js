@@ -28,16 +28,18 @@ router.get('/employeeInfo/:employeeId',function (req,res,next) {
 router.post('/login',function (req,res,next) {
   combinedQuery.ownerOrEmployee(req, function(err, user){
     console.log('user', user);
-    if(err) return res.status(400).send({message: 'Error loggin in. Please try again.'})
+    if(err) return res.status(400).send({message: err})
     if (user.user.owner){
       Owner.findOne({id: user._id }).select('-password')
       .populate({ path:'employees menus', match: user.storeCode, select:'-password' })
       .exec(function (err, popUser) {
-      res.status(err ? 400 : 200).send(err || popUser);
+      res.status(err ? 400 : 200).send(err || {token:user.token, user:popUser});
       })
     }else {
-      Employee.findOne({id: user._id}).select('-password').exec(function (err, employee) {
-        res.status(err ? 400 : 200).send(err || employee);
+      Employee.findOne({id: user._id}).select('-password')
+      .populate({path:'orders menus'})
+      .exec(function (err, employee) {
+        res.status(err ? 400 : 200).send(err || {token:user.token, user:employee});
       })
     }
   });
