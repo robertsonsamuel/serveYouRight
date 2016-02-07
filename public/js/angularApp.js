@@ -158,7 +158,7 @@ app.controller('welcomeCtrl', function($rootScope, $scope, registerSrv, loginSrv
 });
 
 
-app.controller('menuCtrl', function($rootScope, $scope, $state, tokenSvc, getSvc, createSvc, deleteSvc) {
+app.controller('menuCtrl', function($rootScope, $scope, $state, tokenSvc, getSvc, createSvc, editSvc, deleteSvc) {
   if ($rootScope.editingMenu) {
     $rootScope.loggedIn = true;
     getSvc.getMenuInfo($rootScope.editingMenu)
@@ -183,6 +183,35 @@ app.controller('menuCtrl', function($rootScope, $scope, $state, tokenSvc, getSvc
         $scope.newItemPrice = '';
       },function (err) {
         swal("Error!", "There was an error adding an item to the menu.", "error");
+      })
+    }
+
+    $scope.editItem = function (itemId, itemName, itemDescription, itemPrice) {
+      $scope.editItemId = itemId;
+      $scope.editItemName = itemName;
+      $scope.editItemDesc = itemDescription;
+      $scope.editItemPrice = itemPrice;
+
+      $('#editItemModal').modal('show')
+    }
+
+    $scope.saveItemChanges = function () {
+      let item = {
+          itemName:$scope.editItemName,
+          itemDescription:$scope.editItemDesc,
+          itemPrice:$scope.editItemPrice
+      };
+      editSvc.editItem($rootScope.editingMenu, $scope.editItemId, item)
+      .then(function (resp) {
+        $scope.menu = resp.data;
+        $scope.editItemId = '';
+        $scope.editItemName ='';
+        $scope.editItemDesc ='';
+        $scope.editItemPrice ='';
+        $('#editItemModal').modal('hide');
+
+      },function (err) {
+        console.log(err);
       })
     }
 
@@ -280,6 +309,12 @@ app.service('createSvc', function ($http) {
   }
   this.addItem = function(menuId, itemInfo){
     return $http.post(`/menus/create/item/${menuId}`, itemInfo)
+  }
+})
+
+app.service('editSvc', function ($http) {
+  this.editItem = function (menuId, itemId, item) {
+    return $http.put(`/menus/edit/item/${menuId}/${itemId}`, item);
   }
 })
 

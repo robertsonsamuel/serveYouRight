@@ -11,7 +11,14 @@ let itemSchema = new Schema({
 })
 
 
-let Item = mongoose.model('Item', itemSchema);
 
+itemSchema.statics.editItem = function (req, cb) {
+  Item.findOneAndUpdate({_id: req.params.itemId}, req.body, function (err, editedItem) {
+    if (err) return cb(err, null);
+    return cb(null, editedItem)
+  })
+}
+
+let Item = mongoose.model('Item', itemSchema);
 
 module.exports = Item;
