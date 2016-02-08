@@ -4,7 +4,8 @@ let mongoose = require("mongoose");
 let Schema = mongoose.Schema;
 
 let orderSchema = new Schema({
-  order:[{ type: Schema.Types.ObjectId, ref: 'Item'}]
+  employee: {type: String},
+  items:[{ type: Schema.Types.ObjectId, ref: 'Item'}]
 })
 
 let Order = mongoose.model('Order', orderSchema);
