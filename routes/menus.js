@@ -7,6 +7,13 @@ let express       = require('express'),
     Item          = require('../models/Item'),
     combinedQuery = require('../util/combinedQuery');
 
+router.get('/storeMenus/:storeCode', function (req, res, next) {
+  Menu.find({storeCode:req.params.storeCode}).populate({ path:'items'})
+  .exec(function (err, popMenu) {
+    res.status(err ? 400 : 200).send(err || popMenu)
+  })
+})
+
 router.get('/:ownerId', function (req, res, next) {
   Owner.findOne({_id: req.params.ownerId}).select('-password').populate({ path:'menus employees', select:'-password'})
   .exec(function (err, popOwner) {

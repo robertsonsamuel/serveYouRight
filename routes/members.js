@@ -30,9 +30,11 @@ router.post('/login',function (req,res,next) {
     console.log('user', user);
     if(err) return res.status(400).send({message: err})
     if (user.user.owner){
-      Owner.findOne({id: user._id }).select('-password')
-      .populate({ path:'employees menus', match: user.storeCode, select:'-password' })
+      Owner.findById(user.user._id).select('-password')
+      .populate({ path:'employees menus', select:'-password' })
       .exec(function (err, popUser) {
+        if(err) console.log(err);
+        console.log('populated owner', popUser);
       res.status(err ? 400 : 200).send(err || {token:user.token, user:popUser});
       })
     }else {
@@ -48,7 +50,7 @@ router.post('/login',function (req,res,next) {
 router.post('/register',function (req,res,next) {
   if (req.body.storeCode){ // register employee
     combinedQuery.makeEmployee(req, function(err, employee){
-
+      res.status(err ? 400 : 200).send(err || employee);
     });
   } else { //register owner
     Owner.create(req.body, function (err, createdOwner) {

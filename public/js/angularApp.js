@@ -111,7 +111,7 @@ app.controller('welcomeCtrl', function($rootScope, $scope, registerSrv, loginSrv
   }
 
   $scope.createMenu = function () {
-    createSvc.makeMenu($scope.newMenu, $scope.user)
+    createSvc.makeMenu($scope.newMenu, $scope.user, $scope.user.storeCode)
     .then(function (resp) {
       $scope.user.menus = [];
       $scope.user.menus = resp.data.menus;
@@ -304,8 +304,8 @@ app.service('getSvc', function ($http) {
 
 
 app.service('createSvc', function ($http) {
-  this.makeMenu = function (menuName, user) {
-    return $http.post(`/menus/create/${user._id}`, {menuName:menuName})
+  this.makeMenu = function (menuName, user, storeCode) {
+    return $http.post(`/menus/create/${user._id}`, {storeCode:storeCode, menuName:menuName} )
   }
   this.addItem = function(menuId, itemInfo){
     return $http.post(`/menus/create/item/${menuId}`, itemInfo)

@@ -6,7 +6,8 @@ let Schema = mongoose.Schema;
 
 let menuSchema = new Schema({
   menuName: { type: String, require: true },
-  items:[{ type: Schema.Types.ObjectId, ref: 'Item'}]
+  items:[{ type: Schema.Types.ObjectId, ref: 'Item'}],
+  storeCode: {type: String},
 })
 
 
