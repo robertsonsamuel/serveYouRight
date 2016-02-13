@@ -24,7 +24,18 @@ app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
+// CORS
+var whitelist = ['http://localhost:8000, http://localhost:8100'];
+var corsOptions = {
+  origin: function origin(_origin, callback) {
+    var originIsWhitelisted = whitelist.indexOf(_origin) !== -1;
+    callback(null, originIsWhitelisted);
+  }
+};
 app.use(cors());
+
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

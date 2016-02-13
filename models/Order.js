@@ -4,7 +4,8 @@ let mongoose = require("mongoose");
 let Schema = mongoose.Schema;
 
 let orderSchema = new Schema({
-  employee: {type: String},
+  employee: { type: Schema.Types.ObjectId, ref: 'Employee'},
+  storeCode:{type:String},
   items:[{ type: Schema.Types.ObjectId, ref: 'Item'}]
 })
 

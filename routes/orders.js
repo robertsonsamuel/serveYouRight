@@ -2,9 +2,14 @@
 
 let express       = require('express'),
     router        = express.Router(),
+    app           = require('../app'),
     Employee      = require('../models/Employee'),
     Order         = require('../models/Order'),
-    combinedQuery = require('../util/combinedQuery');
+    combinedQuery = require('../util/combinedQuery'),
+    io            = require('socket.io')(4000);
+
+    io.set("origins", "*:*");
+
 
 // gets all orders
 router.get('/',function (req, res, next) {
@@ -13,15 +18,18 @@ router.get('/',function (req, res, next) {
   })
 })
 
-router.get('/:orderId',function (req, res, next) {
-  Order.findById(req.params.orderId).populate({path:'items', select:'-itemDescription'}).exec(function (err, foundOrder) {
+router.get('/:storeCode',function (req, res, next) {
+  Order.find({storeCode:req.params.storeCode}).populate({path:'items employee', select:'-itemDescription -password'}).exec(function (err, foundOrder) {
     res.status(err ? 400 : 200).send(err || foundOrder);
   })
 })
 
 router.post('/newOrder/',function (req, res, next) {
   Order.create(req.body, function (err, order) {
-    res.status(err ? 400:200).send(err || order);
+    Order.find({storeCode:req.body.storeCode}).populate({path:'items employee', select:'-itemDescription -password'}).exec(function (err, foundOrder) {
+      io.emit('newOrder', {order:foundOrder})
+      res.status(err ? 400 : 200).send(err || foundOrder);
+    })
   })
 })
 
