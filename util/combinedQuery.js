@@ -19,6 +19,8 @@ module.exports = {
       if(user === null){
 
         Employee.findOne({ email: req.body.email }, function(err, user) {
+          console.log('email provided:', req.body.email);
+
           if(err) return cb(err, null);
           if(user === null){
 

@@ -27,7 +27,6 @@ router.get('/employeeInfo/:employeeId',function (req,res,next) {
 
 router.post('/login',function (req,res,next) {
   combinedQuery.ownerOrEmployee(req, function(err, user){
-    console.log('user', user);
     if(err) return res.status(400).send({message: err})
     if (user.user.owner){
       Owner.findById(user.user._id).select('-password')
@@ -38,7 +37,7 @@ router.post('/login',function (req,res,next) {
       res.status(err ? 400 : 200).send(err || {token:user.token, user:popUser});
       })
     }else {
-      Employee.findOne({id: user._id}).select('-password')
+      Employee.findById(user.user._id).select('-password')
       .populate({path:'orders menus'})
       .exec(function (err, employee) {
         res.status(err ? 400 : 200).send(err || {token:user.token, user:employee});
