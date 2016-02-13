@@ -8,7 +8,6 @@ let express       = require('express'),
     combinedQuery = require('../util/combinedQuery');
 
 /* GET users listing. */
-
 router.get('/ownerInfo/:ownerId',function (req,res,next) {
   Owner.findOne({_id: req.params.ownerId}).select('-password')
   .populate({path: 'employees menus', select:'-password'})
