@@ -181,11 +181,15 @@ app.controller('menuCtrl', function($rootScope, $scope, $state, tokenSvc, getSvc
         $scope.newItemName = '';
         $scope.newItemDesc = '';
         $scope.newItemPrice = '';
+        $('#createModal').modal('hide')
       },function (err) {
         swal("Error!", "There was an error adding an item to the menu.", "error");
       })
     }
 
+    $scope.addItemModal = function () {
+      $('#createModal').modal('show')
+    }
     $scope.editItem = function (itemId, itemName, itemDescription, itemPrice) {
       $scope.editItemId = itemId;
       $scope.editItemName = itemName;

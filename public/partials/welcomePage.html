@@ -7,14 +7,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Serve You Right</a>
+      <a class="navbar-brand" ui-sref="welcome">Serve You Right</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li><a href="#">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li class="dropdown">
+        <li><a ui-sref="welcome">Home</a></li>
+        <!-- <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="#">Action</a></li>
@@ -25,10 +23,10 @@
             <li><a href="#">Separated link</a></li>
             <li><a href="#">One more separated link</a></li>
           </ul>
-        </li>
+        </li> -->
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="../navbar-static-top/">Static top</a></li>
+        <li><a href="../navbar-static-top/">Help</a></li>
         <li><a ng-click="logout()" href="#">Logout <span class="sr-only">(current)</span></a></li>
       </ul>
     </div>
@@ -37,12 +35,17 @@
 </nav>
 
 <div class="container">
-  <br>
-  <br>
-  <h3>Hello {{user.firstName}} {{user.lastName}}</h3>
-  Store Code: {{user.storeCode}}
+<div class="row infoBar">
+  <div class="col-sm-12 col-md-6 col-md-offset-3 col-lg-6">
+    <br>
+    <br>
+    <h3>Hello {{user.firstName}} {{user.lastName}}</h3>
+    <p>Your Store Code is: <strong>{{user.storeCode}}</strong></p>
+    <p>Give this to your employees to be able to create orders for your resturant.</p>
+  </div>
+</div>
   <div class="row">
-    <div class="col-sm-12 col-md-6 col-lg-6">
+    <div class="col-sm-12 col-md-12 col-lg-6">
       <div class="panel panel-default">
         <div class="panel-heading">
           <h5>Employees:</h5>
@@ -79,10 +82,7 @@
                         <td class="sorting_1">{{employee.firstName}} {{employee.lastName}} </td>
                         <td>{{employee.email}}</td>
                         <td>{{employee.orders.length}}</td>
-                        <td class="center">
-                          <a href="">
-                            <span class="glyphicon glyphicon-pencil"></span>
-                          </a>
+                        <td class="center"> <a href=""> <span class="glyphicon glyphicon-pencil"></span></a>
                         </td>
                         <td class="center">
                           <a href="">
@@ -90,7 +90,6 @@
                           </a>
                         </td>
                       </tr>
-
                     </tbody>
                   </table>
                 </div>
@@ -112,7 +111,7 @@
     </div>
     <!-- /.col-lg-12 -->
 
-    <div class="col-sm-12 col-md-6 col-lg-6">
+    <div class="col-sm-12 col-md-12 col-lg-6">
       <div class="panel panel-default">
         <div class="panel-heading">
           <h5>Menus</h5>
@@ -133,11 +132,11 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-sm-12">
+                <div class="">
                   <table class="table table-striped table-bordered table-hover dataTable no-footer" id="dataTables-example" role="grid" aria-describedby="dataTables-example_info">
                     <thead>
                       <tr role="row">
-                        <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 176px;">Menu Name</th>
+                        <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 176px;">Menu Name</th>
                         <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 216px;">Number Of Items</th>
                         <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 152px;">Edit</th>
                         <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 117px;">Delete</th>
@@ -148,18 +147,15 @@
                         <td class="sorting_1">{{menu.menuName}} </td>
                         <td>{{menu.items.length}}</td>
                         <td class="center">
-                          <a ng-click="editMenu(menu._id)" href=""><span class="glyphicon glyphicon-pencil"></span></a>
-                        </td>
-                        <td class="center">
-                          <a ng-click="deleteMenu(menu._id)" href=""><span class="glyphicon glyphicon-trash"></span></a>
-                        </td>
+                          <a ng-click="editMenu(menu._id)" href=""><span class="glyphicon glyphicon-pencil"></span></a></td>
+                        <td class="center"><a ng-click="deleteMenu(menu._id)" href=""><span class="glyphicon glyphicon-trash"></span></a></td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
               <div class="row">
-                <div class="col-sm-6 col-md-6 col-lg-6">
+                <div class="col-sm-12 col-md-12 col-lg-12">
                   <h4>Create New Menu:</h4>
                 </div>
                 <!-- /.col-lg-6 -->
@@ -185,4 +181,5 @@
     <!-- /.panel -->
   </div>
   <!-- /.col-lg-12 -->
+</div>
 </div>

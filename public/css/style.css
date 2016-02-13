@@ -1,5 +1,15 @@
 
 
 .jumbotron {
-    background-color: rgba(41, 163, 255, 0.66);
+        background-color: rgba(236, 100, 0, 0.86);
+}
+.row.infoBar {
+    background: #404346;
+    margin: 60px;
+    padding: 15px;
+    position: relative;
+    border: 1px solid #232323;
+    border-radius: 19px;
+    text-align: center;
+    box-shadow: yellowgreen;
 }

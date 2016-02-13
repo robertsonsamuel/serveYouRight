@@ -8,7 +8,12 @@ let express       = require('express'),
     combinedQuery = require('../util/combinedQuery'),
     io            = require('socket.io')(4000);
 
-    io.set("origins", "*:*");
+
+//socketio
+io.set("origins", "*:*");
+io.on('orderDone',function (data) {
+  console.log(data);
+})
 
 
 // gets all orders
@@ -36,7 +41,10 @@ router.post('/newOrder/',function (req, res, next) {
 
 router.post('/deleteOrder/:orderId',function (req, res, next) {
   Order.findByIdAndRemove(req.params.orderId,function (err) {
-    res.status(err ? 400:200).send(err || "Deleted!");
+    Order.find({storeCode:req.body.storeCode}).populate({path:'items employee', select:'-itemDescription -password'}).exec(function (err, foundOrder) {
+      io.emit('newOrder', {order:foundOrder})
+      res.status(err ? 400 : 200).send(err || foundOrder);
+    })
   })
 })
 
