@@ -77,8 +77,8 @@ app.controller('loginCtrl',function ($rootScope,$scope, loginSrv, tokenSvc, $sta
 app.controller('registerCtrl',function ($scope, registerSrv, $state ) {
   $scope.register = function (regData) {
     registerSrv.registerUser(regData).then(function (resp) {
-      console.log(resp.data);
-      swal(`Awesome: Hello ${resp.data.user.firstName + resp.data.user.lastName}`, `${resp.data.message}`, "success");
+      console.log(resp);
+      swal(`Awesome: Hello ${resp.data.firstName + resp.data.lastName}`, `Please sign in to continue.`, "success");
       $state.go('login')
     }, function (err) {
       if(err) swal("Error", `${err}`, "warning")
