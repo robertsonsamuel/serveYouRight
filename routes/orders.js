@@ -10,7 +10,8 @@ let express       = require('express'),
 
 
 //socketio
-io.set("origins", "*:*");
+// io.set("origins", "*:*");
+io.set("origins", "https://cryptic-scrubland-29297.herokuapp.com");
 
 io.on('orderDone',function (data) {
   console.log(data);
