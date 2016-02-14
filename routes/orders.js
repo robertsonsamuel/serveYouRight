@@ -6,9 +6,11 @@ let express       = require('express'),
     Employee      = require('../models/Employee'),
     Order         = require('../models/Order'),
     combinedQuery = require('../util/combinedQuery'),
+    // server        = require('http').createServer(app),
     // io            = require("socket.io")(app, {origins:'http://localhost:8000'})
     // io            = require("socket.io")(app)
-    io            = require("socket.io")(4000)
+    io            = require("socket.io")(app)
+
 
 
 //socketio
@@ -16,6 +18,10 @@ io.set("origins", "*:*");
 
 io.on('orderDone',function (data) {
   console.log(data);
+})
+
+io.on('connect',function (data) {
+  console.log('connected to client');
 })
 
 
