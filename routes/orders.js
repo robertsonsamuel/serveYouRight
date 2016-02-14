@@ -39,12 +39,9 @@ router.post('/deleteOrder/:orderId',function (req, res, next) {
   })
 })
 
-
-
-
-    io.on('connect', function(socket) {
-      console.log('client connected!');
-    });
+io.on('connect', function(socket) {
+  console.log('client connected!');
+});
 
     return router;
 }
