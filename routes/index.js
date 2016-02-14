@@ -10,5 +10,9 @@ router.get('/login', function(req, res, next) {
   res.render('loginMember', { title: 'Express' });
 });
 
+router.get('/kitchen', function(req, res, next) {
+  res.render('kitchen');
+});
+
 
 module.exports = router;
