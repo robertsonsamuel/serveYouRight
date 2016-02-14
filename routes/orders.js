@@ -6,10 +6,8 @@ let express       = require('express'),
     Employee      = require('../models/Employee'),
     Order         = require('../models/Order'),
     combinedQuery = require('../util/combinedQuery'),
-    // server        = require('http').createServer(app),
-    // io            = require("socket.io")(app, {origins:'http://localhost:8000'})
+    io            = require("socket.io")(3001, {origins:'http://localhost:8000'})
     // io            = require("socket.io")(app)
-    io            = require("socket.io")(app)
 
 
 
