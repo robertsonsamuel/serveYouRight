@@ -11,7 +11,7 @@ let express       = require('express'),
 
 //socketio
 // io.set("origins", "*:*");
-io.set("origins", "http://localhost:8000");
+io.set("origins", "http://localhost:8000/#/main");
 
 io.on('orderDone',function (data) {
   console.log(data);
