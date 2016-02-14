@@ -1,7 +1,7 @@
 'use strict';
 let app = angular.module('kitchenApp', ['ui.router']);
-let apiUrl = "/"
-let socketUrl = "http://localhost:4000"
+let apiUrl = "http://localhost:3000"
+let socketUrl = "http://localhost:4000";
 let socket = io.connect(socketUrl);
 
 
@@ -58,6 +58,7 @@ app.controller('mainCtrl',function ($rootScope,$scope, $state, orderService) {
 
     orderService.getStoreOrders(storeCode)
     .then(function (resp) {
+      console.log(resp);
       $scope.orders = resp.data;
     },function (err) {
       console.log(err);
