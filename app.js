@@ -33,7 +33,7 @@ var corsOptions = {
     callback(null, originIsWhitelisted);
   }
 };
-app.use(cors());
+app.use(cors(corsOptions));
 
 
 app.use(logger('dev'));
