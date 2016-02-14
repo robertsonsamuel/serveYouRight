@@ -1,8 +1,9 @@
 'use strict';
 let app = angular.module('kitchenApp', ['ui.router']);
-let apiUrl = "https://cryptic-scrubland-29297.herokuapp.com"
-// let socketUrl = "http://localhost:4000";
-let socketUrl = "https://cryptic-scrubland-29297.herokuapp.com:4000";
+// let apiUrl = "https://cryptic-scrubland-29297.herokuapp.com"
+let apiUrl = "http://localhost:3000"
+let socketUrl = "http://localhost:3000";
+// let socketUrl = "https://cryptic-scrubland-29297.herokuapp.com";
 let socket = io.connect(socketUrl);
 
 

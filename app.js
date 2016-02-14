@@ -6,14 +6,15 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var cors = require('cors');
-
 var routes = require('./routes/index');
 var members = require('./routes/members');
 var menus = require('./routes/menus');
-var orders = require('./routes/orders');
+
 
 var app = express();
-
+var socket_io = require( "socket.io" );
+var io           = socket_io();
+app.io           = io;
 // mongodb setup
 var MONGO_URL = process.env.MONGOLAB_URI || 'mongodb://localhost/serveU';
 mongoose.connect(MONGO_URL);
@@ -44,7 +45,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/members', members);
 app.use('/menus', menus);
-app.use('/orders', orders);
+app.use('/orders', require('./routes/orders')(io));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -76,7 +77,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
-
 
 module.exports = app;

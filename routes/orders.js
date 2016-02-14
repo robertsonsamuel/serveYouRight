@@ -1,27 +1,11 @@
 'use strict';
-
+module.exports = function(io) {
 let express       = require('express'),
     router        = express.Router(),
     app           = require('../app'),
     Employee      = require('../models/Employee'),
     Order         = require('../models/Order'),
-    combinedQuery = require('../util/combinedQuery'),
-    io            = require("socket.io")(4000)
-    // io            = require("socket.io")(app)
-
-
-
-//socketio
-io.set("origins", "*:*");
-
-io.on('orderDone',function (data) {
-  console.log(data);
-})
-
-io.on('connect',function (data) {
-  console.log('connected to client');
-})
-
+    combinedQuery = require('../util/combinedQuery');
 
 // gets all orders
 router.get('/',function (req, res, next) {
@@ -55,4 +39,12 @@ router.post('/deleteOrder/:orderId',function (req, res, next) {
   })
 })
 
-module.exports = router;
+
+
+
+    io.on('connect', function(socket) {
+      console.log('client connected!');
+    });
+
+    return router;
+}

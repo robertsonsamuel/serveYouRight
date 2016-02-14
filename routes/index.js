@@ -14,5 +14,4 @@ router.get('/kitchen', function(req, res, next) {
   res.render('kitchen');
 });
 
-
 module.exports = router;
