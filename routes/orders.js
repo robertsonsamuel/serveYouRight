@@ -7,12 +7,12 @@ let express       = require('express'),
     Order         = require('../models/Order'),
     combinedQuery = require('../util/combinedQuery'),
     // io            = require("socket.io")(app, {origins:'http://localhost:8000'})
-    io            = require("socket.io")(app)
+    // io            = require("socket.io")(app)
+    io            = require("socket.io")(4000)
 
 
 //socketio
 io.set("origins", "*:*");
-
 
 io.on('orderDone',function (data) {
   console.log(data);
