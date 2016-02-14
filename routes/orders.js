@@ -6,12 +6,12 @@ let express       = require('express'),
     Employee      = require('../models/Employee'),
     Order         = require('../models/Order'),
     combinedQuery = require('../util/combinedQuery'),
-    io            = require("socket.io").listen(app);
+    io            = require("socket.io")(app, {origins:"http://localhost:8000"})
 
 
 //socketio
 // io.set("origins", "*:*");
-io.set("origins", "http://localhost:8000/#/main");
+
 
 io.on('orderDone',function (data) {
   console.log(data);
