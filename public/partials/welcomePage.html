@@ -82,13 +82,8 @@
                         <td class="sorting_1">{{employee.firstName}} {{employee.lastName}} </td>
                         <td>{{employee.email}}</td>
                         <td>{{employee.orders.length}}</td>
-                        <td class="center"> <a href="" ng-click="launchEditEmployeeModal(employee)"> <span class="glyphicon glyphicon-pencil"></span></a>
-                        </td>
-                        <td class="center">
-                          <a href="">
-                            <span class="glyphicon glyphicon-trash"></span>
-                          </a>
-                        </td>
+                        <td class="center"> <a href="" ng-click="launchEditEmployeeModal(employee)"> <span class="glyphicon glyphicon-pencil"></span></a></td>
+                        <td class="center"><a href="" ng-click="deleteEmployee(employee)"><span class="glyphicon glyphicon-trash"></span></a></td>
                       </tr>
                     </tbody>
                   </table>

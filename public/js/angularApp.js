@@ -159,12 +159,34 @@ app.controller('welcomeCtrl', function($rootScope, $scope, registerSrv, loginSrv
     delete employee.$$hashKey
     delete employee.orders
     console.log('before sending', employee);
-    editSvc.editEmployee(employee).then(function (resp) {
-      console.log('after sending', resp);
+    editSvc.editEmployee(employee, $scope.user._id).then(function (resp) {
+      $scope.user = resp.data;
       $('#editEmployeeModal').modal('hide')
     }, function (err) {
       swal('Error', 'Error updating this employee.', 'error');
     })
+
+  }
+
+  $scope.deleteEmployee = function (employee) {
+    swal({
+    title: "Are you sure?",
+    text: "You will not be able to recover this user!",
+    type: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#DD6B55",
+    confirmButtonText: "Yes, delete it!",
+    closeOnConfirm: false
+  },
+  function() {
+    deleteSvc.deleteEmployee(employee._id, $scope.user._id)
+    .then(function (resp) {
+      $scope.user = resp.data
+      swal("Deleted!", "Your user has been deleted.", "success");
+    },function (err) {
+      swal('Error', 'Error deleting this employee.', 'error');
+    })
+  })
 
   }
 
@@ -339,8 +361,8 @@ app.service('editSvc', function ($http) {
   this.editItem = function (menuId, itemId, item) {
     return $http.put(`/menus/edit/item/${menuId}/${itemId}`, item);
   }
-  this.editEmployee = function (employee) {
-    return $http.put(`/members/edit/employee/${employee._id}`, employee)
+  this.editEmployee = function (employee, ownerId) {
+    return $http.put(`/members/edit/employee/${employee._id}/${ownerId}`, employee)
   }
 })
 
@@ -350,5 +372,8 @@ app.service('deleteSvc',function ($http) {
   }
   this.deleteItem = function (menuId, itemId) {
     return $http.post(`/menus/delete/item/${menuId}/${itemId}`)
+  }
+  this.deleteEmployee = function (employeeId, ownerId) {
+    return $http.post(`/members/delete/employee/${employeeId}/${ownerId}`)
   }
 })

@@ -33,7 +33,6 @@ router.post('/login',function (req,res,next) {
       .populate({ path:'employees menus', select:'-password' })
       .exec(function (err, popUser) {
         if(err) console.log(err);
-        console.log('populated owner', popUser);
       res.status(err ? 400 : 200).send(err || {token:user.token, user:popUser});
       })
     }else {
@@ -54,7 +53,7 @@ router.post('/register', function(req, res, next) {
           res.status(err ? 400 : 200).send(err || employee);
         });
       }else {
-        res.status(400).send(err);
+        return res.status(400).send(err);
       }
     })
 
@@ -65,20 +64,33 @@ router.post('/register', function(req, res, next) {
           res.status(err ? 400 : 200).send(err || createdOwner);
         })
       }else{
-        res.status(400).send(err);
+        return res.status(400).send(err);
       }
     })
   }
 });
 
-router.put('/edit/employee/:employeeId', function (req, res, next) {
+router.put('/edit/employee/:employeeId/:ownerId', function (req, res, next) {
   auth.hashPassword(req, function (err, hashedEmployee) {
-      if(err) res.status(400).send(err);
+      if(err) return res.status(400).send(err);
     Employee.findByIdAndUpdate(req.params.employeeId, hashedEmployee, function (err, employee) {
-      res.status(err ? 400 : 200).send(err || employee);
+      if(err) return res.status(400).send(err);
+      Owner.findOne({_id: req.params.ownerId}).select('-password').populate({ path:'menus employees', select:'-password'})
+      .exec(function (err, popOwner) {
+        res.status(err ? 400 : 200).send(err || popOwner)
+      })
     })
   })
+})
 
+router.post('/delete/employee/:employeeId/:ownerId', function (req, res, next) {
+  Employee.findByIdAndRemove(req.params.employeeId, function (err, employee) {
+    if(err) return res.status(400).send(err);
+    Owner.findOne({_id: req.params.ownerId}).select('-password').populate({ path:'menus employees', select:'-password'})
+    .exec(function (err, popOwner) {
+      res.status(err ? 400 : 200).send(err || popOwner)
+    })
+  })
 })
 
 module.exports = router;
