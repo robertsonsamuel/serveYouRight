@@ -1,5 +1,6 @@
 'use strict';
-let Owner   = require('../models/Owner'),
+let Owner    = require('../models/Owner'),
+    bcrypt   = require("bcrypt"),
     Employee = require('../models/Employee');
 
 module.exports =  {
@@ -16,5 +17,15 @@ module.exports =  {
       if(err) return cb('Error validating email address.')
       owner ?  cb('Email is already taken.') :  cb(null)  // returns null if no owner
     })
+  },
+  hashPassword: function (req, cb) {
+    bcrypt.genSalt(10, function(err, salt) {
+      if(err) return cb(err, null);
+      bcrypt.hash(req.body.password, salt, function(err, hash) {
+        if(err) return cb(err, null);
+        req.body.password = hash;
+        return cb(null, req.body)
+      });
+    });
   }
 };

@@ -78,7 +78,7 @@ app.controller('registerCtrl',function ($scope, registerSrv, $state ) {
   $scope.register = function (regData) {
     registerSrv.registerUser(regData).then(function (resp) {
       console.log(resp);
-      swal(`Awesome: Hello ${resp.data.firstName + resp.data.lastName}`, `You have been registered!`, "success");
+      swal(`Awesome: Hello ${resp.data.firstName} ${resp.data.lastName}`, `You have been registered!`, "success");
       $state.go('login')
     }, function (err) {
       if(err) swal("Error", `${err.data}`, "warning")
@@ -88,7 +88,7 @@ app.controller('registerCtrl',function ($scope, registerSrv, $state ) {
 })
 
 // WelcomePage Ctrl
-app.controller('welcomeCtrl', function($rootScope, $scope, registerSrv, loginSrv, $state, tokenSvc, getSvc, createSvc, deleteSvc) {
+app.controller('welcomeCtrl', function($rootScope, $scope, registerSrv, loginSrv, $state, tokenSvc, getSvc, createSvc, editSvc, deleteSvc) {
   if (typeof localStorage.getItem('token') === undefined) {
     $state.go('login')
   } else if (localStorage.getItem('token') === null) {
@@ -108,7 +108,7 @@ app.controller('welcomeCtrl', function($rootScope, $scope, registerSrv, loginSrv
         $scope.logout();
         swal("Authentication Err", 'You are not authorized to view this page', 'error');
       }
-  }
+    }
 
   $scope.createMenu = function () {
     createSvc.makeMenu($scope.newMenu, $scope.user, $scope.user.storeCode)
@@ -147,6 +147,25 @@ app.controller('welcomeCtrl', function($rootScope, $scope, registerSrv, loginSrv
   $scope.editMenu = function (menuID) {
     $rootScope.editingMenu = menuID
     $state.go('menu')
+  }
+
+  $scope.launchEditEmployeeModal = function (employee) {
+    $scope.member = employee;
+    $scope.member._id = employee._id;
+    $('#editEmployeeModal').modal('show')
+  }
+  $scope.editEmployee = function (employee) {
+    delete employee.menus
+    delete employee.$$hashKey
+    delete employee.orders
+    console.log('before sending', employee);
+    editSvc.editEmployee(employee).then(function (resp) {
+      console.log('after sending', resp);
+      $('#editEmployeeModal').modal('hide')
+    }, function (err) {
+      swal('Error', 'Error updating this employee.', 'error');
+    })
+
   }
 
   $scope.logout = function() {
@@ -319,6 +338,9 @@ app.service('createSvc', function ($http) {
 app.service('editSvc', function ($http) {
   this.editItem = function (menuId, itemId, item) {
     return $http.put(`/menus/edit/item/${menuId}/${itemId}`, item);
+  }
+  this.editEmployee = function (employee) {
+    return $http.put(`/members/edit/employee/${employee._id}`, employee)
   }
 })
 

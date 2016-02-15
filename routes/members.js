@@ -71,6 +71,14 @@ router.post('/register', function(req, res, next) {
   }
 });
 
+router.put('/edit/employee/:employeeId', function (req, res, next) {
+  auth.hashPassword(req, function (err, hashedEmployee) {
+      if(err) res.status(400).send(err);
+    Employee.findByIdAndUpdate(req.params.employeeId, hashedEmployee, function (err, employee) {
+      res.status(err ? 400 : 200).send(err || employee);
+    })
+  })
 
+})
 
 module.exports = router;

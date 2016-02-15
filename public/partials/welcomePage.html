@@ -82,7 +82,7 @@
                         <td class="sorting_1">{{employee.firstName}} {{employee.lastName}} </td>
                         <td>{{employee.email}}</td>
                         <td>{{employee.orders.length}}</td>
-                        <td class="center"> <a href=""> <span class="glyphicon glyphicon-pencil"></span></a>
+                        <td class="center"> <a href="" ng-click="launchEditEmployeeModal(employee)"> <span class="glyphicon glyphicon-pencil"></span></a>
                         </td>
                         <td class="center">
                           <a href="">
@@ -183,3 +183,49 @@
   <!-- /.col-lg-12 -->
 </div>
 </div>
+
+
+<div class="modal fade" id="editEmployeeModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <form name="form" ng-submit="editEmployee(member)" role="form">
+          <div class="form-group" ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
+            <label  for="email">First name</label>
+            <input type="text" name="firstName" id="firstName" class="form-control" ng-model="member.firstName" required />
+            <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">First name is required</span>
+          </div>
+          <div class="form-group" ng-class="{ 'has-error': form.lastName.$dirty && form.lastName.$error.required }">
+            <label  for="email">Last name</label>
+            <input type="text" name="lastName" id="Text1" class="form-control" ng-model="member.lastName" required />
+            <span ng-show="form.lastName.$dirty && form.lastName.$error.required" class="help-block">Last name is required</span>
+          </div>
+          <div class="form-group" ng-class="{ 'has-error': form.email.$dirty && form.email.$error.required }">
+            <label  for="email">Email</label>
+            <input type="email" name="email" id="email" class="form-control" ng-model="member.email" required />
+            <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Email is required</span>
+          </div>
+          <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+            <label  for="password">Password</label>
+            <input type="password" name="password" id="password" class="form-control" ng-model="member.password" required />
+            <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+          </div>
+          <div class="form-group" ng-class="{ 'has-error': form.passwordConf.$dirty && form.passwordConf.$error.required }">
+            <label  for="passwordConf">Confirm Password</label>
+            <input type="password" name="passwordConf" id="passwordConf" class="form-control" ng-model="member.passwordConf" required />
+            <span ng-show="form.passwordConf.$dirty && form.passwordConf.$error.required || member.password !== member.passwordConf" class="help-block">Paswords Must Match</span>
+          </div>
+          <div class="form-actions">
+            <button type="submit" ng-disabled="form.$invalid || member.dataLoading || member.password !== member.passwordConf" class="btn btn-primary">Save</button>
+            <img ng-if="member.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+            />
+            <button data-dismiss="modal" class="btn btn-danger">Cancel</button>
+          </div>
+        </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
