@@ -5,7 +5,31 @@ let express       = require('express'),
     app           = require('../app'),
     Employee      = require('../models/Employee'),
     Order         = require('../models/Order'),
+    twilio         = require('twilio'),
+    client = new twilio.RestClient(process.env.TWILLO_SID, process.env.TWILLO_TOKEN),
     combinedQuery = require('../util/combinedQuery');
+
+
+function sendSMS(phoneNumber) {
+  client.sms.messages.create({
+      to:`+${phoneNumber}`,
+      from:'+18146193816',
+      body:'Order Up!'
+  }, function(error, message) {
+      if(error) console.log(error);
+
+      if (!error) {
+
+          console.log('Success! The SID for this SMS message is:');
+          console.log(message.sid);
+
+          console.log('Message sent on:');
+          console.log(message.dateCreated);
+      } else {
+          console.log('Oops! There was an error.');
+      }
+  });
+}
 
 // gets all orders
 router.get('/',function (req, res, next) {
@@ -32,8 +56,11 @@ router.post('/newOrder/',function (req, res, next) {
 
 router.post('/deleteOrder/:orderId',function (req, res, next) {
   Order.findByIdAndRemove(req.params.orderId,function (err) {
+    if(err) return res.status(400).send(err);
     Order.find({storeCode:req.body.storeCode}).populate({path:'items employee', select:'-itemDescription -password'}).exec(function (err, foundOrder) {
+      console.log('order by employee', foundOrder);
       io.emit('newOrder', {order:foundOrder})
+      sendSMS(req.body.employee.phoneNumber);
       res.status(err ? 400 : 200).send(err || foundOrder);
     })
   })

@@ -52,7 +52,7 @@ app.controller('mainCtrl',function ($rootScope,$scope, $state, orderService) {
   $scope.finishOrder = function (order) {
     orderService.completeOrder(order)
     .then(function (resp) {
-      socket.emit('orderDone', {message:`Order up!`})
+      socket.emit('orderDone', order)
     },function (err) {
       swal('Error', 'There was an error ending the order', 'error')
     })
@@ -97,6 +97,6 @@ app.service('orderService',function ($http) {
     return $http.get(`${apiUrl}/orders/${storeCode}`)
   }
   this.completeOrder = function (order) {
-    return $http.post(`${apiUrl}/orders/deleteOrder/${order._id}`, {storeCode:order.storeCode})
+    return $http.post(`${apiUrl}/orders/deleteOrder/${order._id}`, order)
   }
 });

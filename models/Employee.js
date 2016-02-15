@@ -10,6 +10,7 @@ let empSchema = new Schema({
   email: { type: String, require: true, unique: true },
   password: { type: String, require: true },
   storeCode: { type: String, unique: false },
+  phoneNumber: { type:String },
   owner:{ type: Boolean, default:false },
   menus: [{ type: Schema.Types.ObjectId, ref: 'Menu' }],
   orders:[{ type: Schema.Types.ObjectId, ref: 'Order'}]

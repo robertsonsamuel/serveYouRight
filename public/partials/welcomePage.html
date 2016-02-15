@@ -204,6 +204,11 @@
             <input type="email" name="email" id="email" class="form-control" ng-model="member.email" required />
             <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Email is required</span>
           </div>
+          <div class="form-group" ng-class="{ 'has-error': form.phone.$dirty && form.phone.$error.required }">
+            <label for="phone">Phone Number - Area and Country Code</label>
+            <input type="tel" pattern=".{11,11}" name="tel" id="tel" class="form-control" ng-model="member.phoneNumber" required />
+            <span ng-show="form.phone.$dirty && form.phone.$error.required" class="help-block">Phone Number is required</span>
+          </div>
           <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
             <label  for="password">Password</label>
             <input type="password" name="password" id="password" class="form-control" ng-model="member.password" required />
