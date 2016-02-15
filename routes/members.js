@@ -5,7 +5,8 @@ let express       = require('express'),
     Employee      = require('../models/Employee'),
     Owner         = require('../models/Owner'),
     Order         = require('../models/Order'),
-    combinedQuery = require('../util/combinedQuery');
+    combinedQuery = require('../util/combinedQuery'),
+    auth          = require('../util/auth');
 
 /* GET users listing. */
 router.get('/ownerInfo/:ownerId',function (req,res,next) {
@@ -45,16 +46,29 @@ router.post('/login',function (req,res,next) {
   });
 })
 
-router.post('/register',function (req,res,next) {
-  if (req.body.storeCode){ // register employee
-    combinedQuery.makeEmployee(req, function(err, employee){
-      res.status(err ? 400 : 200).send(err || employee);
-    });
-  } else { //register owner
-    Owner.create(req.body, function (err, createdOwner) {
-      res.status(err ? 400 : 200).send(err || createdOwner);
+router.post('/register', function(req, res, next) {
+  if (req.body.storeCode) { // register employee
+    auth.checkEmployeeRegistration(req, function (err) {
+      if(!err){
+        combinedQuery.makeEmployee(req, function(err, employee) {
+          res.status(err ? 400 : 200).send(err || employee);
+        });
+      }else {
+        res.status(400).send(err);
+      }
     })
-   }
+
+  } else { //register owner
+    auth.checkOwnerRegistration(req, function(err) {
+      if (!err) {
+        Owner.create(req.body, function(err, createdOwner) {
+          res.status(err ? 400 : 200).send(err || createdOwner);
+        })
+      }else{
+        res.status(400).send(err);
+      }
+    })
+  }
 });
 
 
