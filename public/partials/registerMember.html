@@ -20,7 +20,7 @@
     </div>
     <div class="form-group" ng-class="{ 'has-error': form.phone.$dirty && form.phone.$error.required }">
       <label class="redText" for="phone">Phone Number - Area and Country Code</label>
-      <input type="tel" pattern=".{10,10}" name="tel" id="tel" class="form-control" ng-model="member.user.phoneNumber" required />
+      <input type="tel" pattern=".{11,11}" name="tel" id="tel" class="form-control" ng-model="member.user.phoneNumber" required />
       <span ng-show="form.phone.$dirty && form.phone.$error.required" class="help-block">Phone Number is required</span>
     </div>
     <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
