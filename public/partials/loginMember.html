@@ -1,13 +1,16 @@
 <div ng-controller="loginCtrl" class="col-md-8 col-md-offset-2">
-  <h3>Login</h3>
+  <div class="card card-container">
+    <img id="profile-img" class="profile-img-card" src="./img/Serve-You-Right-logo.png" />
+    <p id="profile-name" class="profile-name-card"></p>
+    <h3 class="redText">Login</h3>
   <form name="form" ng-submit="login(member)" role="form">
     <div class="form-group" ng-class="{ 'has-error': form.email.$dirty && form.email.$error.required }">
-      <label for="email">Email</label>
+      <label class="redText" for="email">Email</label>
       <input type="text" name="email" id="email" class="form-control" ng-model="member.email" required />
       <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Email is required</span>
     </div>
     <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
-      <label for="password">Password</label>
+      <label class="redText" for="password">Password</label>
       <input type="password" name="password" id="password" class="form-control" ng-model="member.password" required />
       <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
     </div>
@@ -18,4 +21,5 @@
       <a href="#/register" class="btn btn-link">Register</a>
     </div>
   </form>
+</div>
 </div>

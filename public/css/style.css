@@ -1,5 +1,39 @@
+.mainContainer {
+    background: #FFB42B;
+}
+.help-block {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    color: #E60000;
+}
+.redText{
+  color: red;
+}
+img#profile-img {
+    position: relative;
+    width: 100%;
+}
 
-
+.card-container.card {
+    max-width: 400px;
+    padding: 100px 40px;
+    background-color: white;
+}
+.card {
+    background-color: #F7F7F7;
+    /* just in case there no content*/
+    padding: 20px 25px 30px;
+    margin: 0 auto 25px;
+    margin-top: 50px;
+    /* shadows and rounded borders */
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
 .jumbotron {
         background-color: rgba(236, 100, 0, 0.86);
 }

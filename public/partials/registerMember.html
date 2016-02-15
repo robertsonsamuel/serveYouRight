@@ -1,33 +1,35 @@
 <div ng-controller="registerCtrl" class="col-md-8 col-md-offset-2">
-  <h3>Register</h3>
+    <div class="card card-container">
+      <img id="profile-img" class="profile-img-card" src="./img/Serve-You-Right-logo.png" />
+  <h3 class="redText">Register</h3>
   <form name="form" ng-submit="register(member.user)" role="form">
     <div class="form-group" ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
-      <label for="email">First name</label>
+      <label class="redText" for="email">First name</label>
       <input type="text" name="firstName" id="firstName" class="form-control" ng-model="member.user.firstName" required />
       <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">First name is required</span>
     </div>
     <div class="form-group" ng-class="{ 'has-error': form.lastName.$dirty && form.lastName.$error.required }">
-      <label for="email">Last name</label>
+      <label class="redText" for="email">Last name</label>
       <input type="text" name="lastName" id="Text1" class="form-control" ng-model="member.user.lastName" required />
       <span ng-show="form.lastName.$dirty && form.lastName.$error.required" class="help-block">Last name is required</span>
     </div>
     <div class="form-group" ng-class="{ 'has-error': form.email.$dirty && form.email.$error.required }">
-      <label for="email">Email</label>
+      <label class="redText" for="email">Email</label>
       <input type="email" name="email" id="email" class="form-control" ng-model="member.user.email" required />
       <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Email is required</span>
     </div>
     <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
-      <label for="password">Password</label>
+      <label class="redText" for="password">Password</label>
       <input type="password" name="password" id="password" class="form-control" ng-model="member.user.password" required />
       <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
     </div>
     <div class="form-group" ng-class="{ 'has-error': form.passwordConf.$dirty && form.passwordConf.$error.required }">
-      <label for="passwordConf">Confirm Password</label>
+      <label class="redText" for="passwordConf">Confirm Password</label>
       <input type="password" name="passwordConf" id="passwordConf" class="form-control" ng-model="member.user.passwordConf" required />
       <span ng-show="form.passwordConf.$dirty && form.passwordConf.$error.required || member.user.password !== member.user.passwordConf" class="help-block">Paswords Must Match</span>
     </div>
     <div class="form-group" ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
-      <label for="email">Store Code</label>
+      <label class="redText" for="email">Store Code</label>
       <input type="text" name="storeCode" id="storeCode" class="form-control" ng-model="member.user.storeCode" />
       <span class="help-block">If you have store code, enter it here.</span>
     </div>
@@ -38,4 +40,5 @@
       <a href="#/login" class="btn btn-link">Cancel</a>
     </div>
   </form>
+</div>
 </div>
