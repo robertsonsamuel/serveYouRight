@@ -144,3 +144,6 @@ button.btn.btn-success.btn-lg {
 .forgot-password:focus{
     color: rgb(12, 97, 33);
 }
+.kitchen.panel-heading.ng-binding {
+    background: #FF0500;
+}
