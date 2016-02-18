@@ -47,7 +47,7 @@ router.get('/:storeCode',function (req, res, next) {
 router.post('/newOrder/',function (req, res, next) {
   Order.create(req.body, function (err, order) {
     Order.find({storeCode:req.body.storeCode}).populate({path:'items employee', select:'-itemDescription -password'}).exec(function (err, foundOrder) {
-      io.emit('newOrder', {order:foundOrder})
+      io.emit(req.body.storeCode.toString(), {order:foundOrder})
       res.status(err ? 400 : 200).send(err || foundOrder);
     })
   })
@@ -59,7 +59,7 @@ router.post('/deleteOrder/:orderId',function (req, res, next) {
     if(err) return res.status(400).send(err);
     Order.find({storeCode:req.body.storeCode}).populate({path:'items employee', select:'-itemDescription -password'}).exec(function (err, foundOrder) {
       console.log('order by employee', foundOrder);
-      io.emit('newOrder', {order:foundOrder})
+      io.emit(req.body.storeCode.toString(), {order:foundOrder})
       sendSMS(req.body.employee.phoneNumber);
       res.status(err ? 400 : 200).send(err || foundOrder);
     })

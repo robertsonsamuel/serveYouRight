@@ -44,7 +44,7 @@ app.controller('mainCtrl',function ($rootScope,$scope, $state, orderService) {
 
   })
 
-  socket.on('newOrder', function (resp) {
+  socket.on(storeCode, function (resp) {
     $scope.$apply(function() { $scope.orders = resp.order; });
 
   })
@@ -52,7 +52,7 @@ app.controller('mainCtrl',function ($rootScope,$scope, $state, orderService) {
   $scope.finishOrder = function (order) {
     orderService.completeOrder(order)
     .then(function (resp) {
-      socket.emit('orderDone', order)
+      socket.emit(storeCode, order)
     },function (err) {
       swal('Error', 'There was an error ending the order', 'error')
     })

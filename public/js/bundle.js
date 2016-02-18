@@ -1,82 +1,76 @@
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-/******/
+
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-/******/
+
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-/******/
+
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			exports: {},
 /******/ 			id: moduleId,
 /******/ 			loaded: false
 /******/ 		};
-/******/
+
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
+
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/
+
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
-/******/
+
+
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-/******/
+
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-/******/
+
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-/******/
+
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/*!******************!*\
-  !*** multi main ***!
-  \******************/
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(/*! ./public/js/angularApp.js */1);
-	__webpack_require__(/*! ./public/js/controllers/loginCtrl.js */2);
-	__webpack_require__(/*! ./public/js/controllers/menuCtrl.js */3);
-	__webpack_require__(/*! ./public/js/controllers/registerCtrl.js */4);
-	__webpack_require__(/*! ./public/js/controllers/welcomeCtrl.js */5);
-	__webpack_require__(/*! ./public/js/services/loginSrv.js */6);
-	__webpack_require__(/*! ./public/js/services/registerSrv.js */7);
-	__webpack_require__(/*! ./public/js/services/tokenSvc.js */8);
-	__webpack_require__(/*! ./public/js/services/AuthService.js */9);
-	__webpack_require__(/*! ./public/js/services/getSvc.js */10);
-	__webpack_require__(/*! ./public/js/services/createSvc.js */11);
-	__webpack_require__(/*! ./public/js/services/editSvc.js */12);
-	module.exports = __webpack_require__(/*! ./public/js/services/deleteSvc.js */13);
+	__webpack_require__(1);
+	__webpack_require__(2);
+	__webpack_require__(3);
+	__webpack_require__(4);
+	__webpack_require__(5);
+	__webpack_require__(6);
+	__webpack_require__(7);
+	__webpack_require__(8);
+	__webpack_require__(9);
+	__webpack_require__(10);
+	__webpack_require__(11);
+	__webpack_require__(12);
+	module.exports = __webpack_require__(13);
 
 
 /***/ },
 /* 1 */
-/*!*********************************!*\
-  !*** ./public/js/angularApp.js ***!
-  \*********************************/
 /***/ function(module, exports) {
 
 	/* global swal */
 	/* global angular */
 	'use strict';
 	let app = angular.module('MainApp', ['ui.router']);
-	
+
 	app.config(function($stateProvider, $urlRouterProvider) {
 	  $urlRouterProvider.otherwise("login");
-	
+
 	  $stateProvider
 	    .state('login', {
 	      url: "/login",
@@ -102,10 +96,10 @@
 	      controller: "menuCtrl",
 	      authenticate: true
 	    })
-	
-	
+
+
 	})
-	
+
 	app.run(function ($rootScope, $state, AuthService) {
 	  $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
 	    if (toState.authenticate && !AuthService.isAuthenticated()){
@@ -119,9 +113,6 @@
 
 /***/ },
 /* 2 */
-/*!********************************************!*\
-  !*** ./public/js/controllers/loginCtrl.js ***!
-  \********************************************/
 /***/ function(module, exports) {
 
 	'use strict'
@@ -154,15 +145,12 @@
 
 /***/ },
 /* 3 */
-/*!*******************************************!*\
-  !*** ./public/js/controllers/menuCtrl.js ***!
-  \*******************************************/
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	let app = angular.module('MainApp');
-	
+
 	app.controller('menuCtrl', function($rootScope, $scope, $state, tokenSvc, getSvc, createSvc, editSvc, deleteSvc) {
 	  if ($rootScope.editingMenu) {
 	    $rootScope.loggedIn = true;
@@ -172,7 +160,7 @@
 	      }, function(err) {
 	        console.log(err);
 	      })
-	
+
 	    $scope.createItem = function() {
 	      let menuId = $rootScope.editingMenu;
 	      let item = {
@@ -191,7 +179,7 @@
 	        swal("Error!", "There was an error adding an item to the menu.", "error");
 	      })
 	    }
-	
+
 	    $scope.addItemModal = function () {
 	      $('#createModal').modal('show')
 	    }
@@ -200,10 +188,10 @@
 	      $scope.editItemName = itemName;
 	      $scope.editItemDesc = itemDescription;
 	      $scope.editItemPrice = itemPrice;
-	
+
 	      $('#editItemModal').modal('show')
 	    }
-	
+
 	    $scope.saveItemChanges = function () {
 	      let item = {
 	          itemName:$scope.editItemName,
@@ -218,12 +206,12 @@
 	        $scope.editItemDesc ='';
 	        $scope.editItemPrice ='';
 	        $('#editItemModal').modal('hide');
-	
+
 	      },function (err) {
 	        console.log(err);
 	      })
 	    }
-	
+
 	    $scope.deleteItem = function (itemId) {
 	      swal({
 	      title: "Are you sure?",
@@ -244,15 +232,15 @@
 	      })
 	    })
 	    }
-	
-	
+
+
 	    $scope.logout = function() {
 	      $state.go('login')
 	      $rootScope.loggedIn = false;
 	      tokenSvc.removeToken();
 	      tokenSvc.logOutUser();
 	    }
-	
+
 	  } else {
 	    $state.go('welcome');
 	  }
@@ -261,15 +249,12 @@
 
 /***/ },
 /* 4 */
-/*!***********************************************!*\
-  !*** ./public/js/controllers/registerCtrl.js ***!
-  \***********************************************/
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	var app = angular.module('MainApp');
-	
+
 	// Register Ctrl
 	app.controller('registerCtrl',function ($scope, registerSrv, $state ) {
 	  $scope.register = function (regData) {
@@ -287,15 +272,12 @@
 
 /***/ },
 /* 5 */
-/*!**********************************************!*\
-  !*** ./public/js/controllers/welcomeCtrl.js ***!
-  \**********************************************/
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	let app = angular.module('MainApp');
-	
+
 	// WelcomePage Ctrl
 	app.controller('welcomeCtrl', function($rootScope, $scope, registerSrv, loginSrv, $state, tokenSvc, getSvc, createSvc, editSvc, deleteSvc) {
 	  if (typeof localStorage.getItem('token') === 'undefined') {
@@ -311,14 +293,14 @@
 	        },function (err) {
 	          console.log(err);
 	        })
-	
+
 	        $rootScope.loggedIn = true;
 	      }else { //is an employee
 	        $scope.logout();
 	        swal("Authentication Err", 'You are not authorized to view this page', 'error');
 	      }
 	    }
-	
+
 	  $scope.createMenu = function () {
 	    createSvc.makeMenu($scope.newMenu, $scope.user, $scope.user.storeCode)
 	    .then(function (resp) {
@@ -329,7 +311,7 @@
 	        swal("Error!", "There was an creating the menu.", "error");
 	    })
 	  }
-	
+
 	  $scope.deleteMenu = function (menuId) {
 	    swal({
 	    title: "Are you sure?",
@@ -352,7 +334,7 @@
 	      })
 	  });
 	}
-	
+
 	  $scope.editMenu = function (menuID) {
 	    $rootScope.editingMenu = menuID
 	    $state.go('menu')
@@ -360,7 +342,7 @@
 	  $scope.launchHelpModal = function () {
 	    $('#helpModal').modal('show')
 	  }
-	
+
 	  $scope.launchEditEmployeeModal = function (employee) {
 	    $scope.member = employee;
 	    $scope.member._id = employee._id;
@@ -377,9 +359,9 @@
 	    }, function (err) {
 	      swal('Error', 'Error updating this employee.', 'error');
 	    })
-	
+
 	  }
-	
+
 	  $scope.deleteEmployee = function (employee) {
 	    swal({
 	    title: "Are you sure?",
@@ -399,9 +381,9 @@
 	      swal('Error', 'Error deleting this employee.', 'error');
 	    })
 	  })
-	
+
 	  }
-	
+
 	  $scope.logout = function() {
 	    $state.go('login')
 	    $rootScope.loggedIn = false;
@@ -413,16 +395,13 @@
 
 /***/ },
 /* 6 */
-/*!****************************************!*\
-  !*** ./public/js/services/loginSrv.js ***!
-  \****************************************/
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	let app = angular.module('MainApp');
-	
-	
+
+
 	app.service('loginSrv', function ($http) {
 	  this.loginUser = function (loginData) {
 	    return $http.post('/members/login',loginData)
@@ -435,14 +414,11 @@
 
 /***/ },
 /* 7 */
-/*!*******************************************!*\
-  !*** ./public/js/services/registerSrv.js ***!
-  \*******************************************/
 /***/ function(module, exports) {
 
 	'use strict';
 	let app = angular.module('MainApp');
-	
+
 	app.service('registerSrv',function ($http) {
 	  this.registerUser = function (userData) {
 	    console.log('before post', userData);
@@ -453,15 +429,12 @@
 
 /***/ },
 /* 8 */
-/*!****************************************!*\
-  !*** ./public/js/services/tokenSvc.js ***!
-  \****************************************/
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	let app = angular.module('MainApp');
-	
+
 	app.service('tokenSvc',function () {
 	  this.setToken = function (token) {
 	     localStorage.setItem('token', token);
@@ -477,15 +450,12 @@
 
 /***/ },
 /* 9 */
-/*!*******************************************!*\
-  !*** ./public/js/services/AuthService.js ***!
-  \*******************************************/
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	let app = angular.module('MainApp');
-	
+
 	app.service('AuthService',function ($http) {
 	  this.isAuthenticated = function (params) {
 	      if(typeof localStorage.token === 'undefined'){
@@ -501,16 +471,13 @@
 
 /***/ },
 /* 10 */
-/*!**************************************!*\
-  !*** ./public/js/services/getSvc.js ***!
-  \**************************************/
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	let app = angular.module('MainApp');
-	
-	
+
+
 	app.service('getSvc', function ($http) {
 	    this.getOwnerInfo = function (userId) {
 	      return $http.get(`/members/ownerInfo/${userId}`)
@@ -523,15 +490,12 @@
 
 /***/ },
 /* 11 */
-/*!*****************************************!*\
-  !*** ./public/js/services/createSvc.js ***!
-  \*****************************************/
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	let app = angular.module('MainApp');
-	
+
 	app.service('createSvc', function ($http) {
 	  this.makeMenu = function (menuName, user, storeCode) {
 	    return $http.post(`/menus/create/${user._id}`, {storeCode:storeCode, menuName:menuName} )
@@ -544,16 +508,13 @@
 
 /***/ },
 /* 12 */
-/*!***************************************!*\
-  !*** ./public/js/services/editSvc.js ***!
-  \***************************************/
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	let app = angular.module('MainApp');
-	
-	
+
+
 	app.service('editSvc', function ($http) {
 	  this.editItem = function (menuId, itemId, item) {
 	    return $http.put(`/menus/edit/item/${menuId}/${itemId}`, item);
@@ -566,14 +527,11 @@
 
 /***/ },
 /* 13 */
-/*!*****************************************!*\
-  !*** ./public/js/services/deleteSvc.js ***!
-  \*****************************************/
 /***/ function(module, exports) {
 
 	'use strict';
 	let app = angular.module('MainApp');
-	
+
 	app.service('deleteSvc',function ($http) {
 	  this.deleteMenu = function (menuId, ownerId) {
 	    return $http.post(`/menus/delete/${ownerId}/${menuId}`)
@@ -589,4 +547,3 @@
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=bundle.js.map
