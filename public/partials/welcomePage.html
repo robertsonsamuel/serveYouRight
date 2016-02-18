@@ -12,21 +12,10 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li><a ui-sref="welcome">Home</a></li>
-        <!-- <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li class="dropdown-header">Nav header</li>
-            <li><a href="#">Separated link</a></li>
-            <li><a href="#">One more separated link</a></li>
-          </ul>
-        </li> -->
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="../navbar-static-top/">Help</a></li>
+        <li><a ng-click="launchHelpModal()" href="">Help</a></li>
+        <li><a href="/kitchen">Kitchen</a></li>
         <li><a ng-click="logout()" href="#">Logout <span class="sr-only">(current)</span></a></li>
       </ul>
     </div>
@@ -51,7 +40,7 @@
           <h5>Employees:</h5>
           <div id="dataTables-example_filter" class="dataTables_filter">
             <label>Search:
-              <input type="search" class="form-control input-sm" placeholder="" aria-controls="dataTables-example">
+              <input ng-model="searchEmployees" type="search" class="form-control input-sm" placeholder="" aria-controls="dataTables-example">
             </label>
           </div>
         </div>
@@ -78,7 +67,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr ng-repeat="employee in user.employees" class="gradeA odd" role="row">
+                      <tr ng-repeat="employee in user.employees | filter:searchEmployees track by $index" class="gradeA odd" role="row">
                         <td class="sorting_1">{{employee.firstName}} {{employee.lastName}} </td>
                         <td>{{employee.email}}</td>
                         <td>{{employee.orders.length}}</td>
@@ -91,7 +80,6 @@
               </div>
               <div class="row">
                 <div class="col-sm-6">
-                  <!--<div class="dataTables_info" id="dataTables-example_info" role="status" aria-live="polite">Showing 1 to 10 of 57 entries</div>-->
                 </div>
                 <div class="col-sm-6">
                 </div>
@@ -112,7 +100,7 @@
           <h5>Menus</h5>
           <div id="dataTables-example_filter" class="dataTables_filter">
             <label>Search:
-              <input type="search" class="form-control input-sm" placeholder="" aria-controls="dataTables-example">
+              <input ng-model="searchMenus" type="search" class="form-control input-sm" placeholder="" aria-controls="dataTables-example">
             </label>
           </div>
         </div>
@@ -138,7 +126,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr ng-repeat="menu in user.menus" class="gradeA odd" role="row">
+                      <tr ng-repeat="menu in user.menus | filter:searchMenus track by $index" class="gradeA odd" role="row">
                         <td class="sorting_1">{{menu.menuName}} </td>
                         <td>{{menu.items.length}}</td>
                         <td class="center">
@@ -229,3 +217,32 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+</div>
+
+<div class="modal fade" id="helpModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+      <div class="row">
+        <div class=""><h3>How to use this app.</h3></div>
+        <div class="col-sm-12 col-md-12 col-lg-12">
+          <ol>
+            <li>Create a new menu by giving it a name and clicking <strong>"Create"</strong></li>
+            <li>Click the <em>edit pencil</em> to add items to the menu or edit existing ones.</li>
+            <li>Give your employee the store code and have them register with the storce code listed.</li>
+            <li>Have your employee download the app for iOS or Android, login and begin to take orders.</li>
+            <li>Visit the <a class="redText" href="/kitchen">kitchen</a> and enter your store code to see orders come in real time.</li>
+            <li>When an order is complete simply click or tap <strong>"Complete Order"</strong> to notify the server! </li>
+          </ol>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

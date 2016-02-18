@@ -357,6 +357,9 @@
 	    $rootScope.editingMenu = menuID
 	    $state.go('menu')
 	  }
+	  $scope.launchHelpModal = function () {
+	    $('#helpModal').modal('show')
+	  }
 	
 	  $scope.launchEditEmployeeModal = function (employee) {
 	    $scope.member = employee;
