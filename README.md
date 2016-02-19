@@ -18,5 +18,4 @@ message letting them know the order is finished! Happy customers and more produc
 
 <hr>
 ## Bugs
-- websocket bug, multiple orders are updated at once, (status: fixing)
 - TBT
